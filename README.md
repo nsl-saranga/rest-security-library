@@ -12,25 +12,8 @@ Every API takes input from the outside world. That input can be malformed, too b
 
 ---
 
-## Install
 
-```bash
-npm install restsecurity
-```
-
-restsecurity is **TypeScript-first** and ships compiled JavaScript plus type declarations.
-
-- **Runtime deps** (installed automatically): `express`, `body-parser`, `ajv`, `ajv-formats`
-- **Dev deps** (if you are writing TS): `typescript`, `@types/express`, `@types/body-parser`
-
-If you clone this repo and want to build it yourself:
-
-```bash
-npm install
-npm run build   # runs tsc, emits dist/index.js + dist/index.d.ts
-```
-
-You can then import it from your own project (TS or JS) in the same way:
+You can import it from your own project (TS or JS) in the same way:
 
 ```typescript
 import { validateRequest, sizeLimiter, sanitizeRequest } from "restsecurity";
