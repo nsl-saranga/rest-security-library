@@ -241,4 +241,3 @@ So: size → sanitize → validate → business logic.
 
 ## License
 
-ISC.
