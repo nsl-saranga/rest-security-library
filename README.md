@@ -18,7 +18,23 @@ Every API takes input from the outside world. That input can be malformed, too b
 npm install restsecurity
 ```
 
-**Peer / runtime:** You need **Express** (and **body-parser** is used by `sizeLimiter`; the package lists it as a dependency). Validation uses **JSON Schema** via **Ajv**.
+restsecurity is **TypeScript-first** and ships compiled JavaScript plus type declarations.
+
+- **Runtime deps** (installed automatically): `express`, `body-parser`, `ajv`, `ajv-formats`
+- **Dev deps** (if you are writing TS): `typescript`, `@types/express`, `@types/body-parser`
+
+If you clone this repo and want to build it yourself:
+
+```bash
+npm install
+npm run build   # runs tsc, emits dist/index.js + dist/index.d.ts
+```
+
+You can then import it from your own project (TS or JS) in the same way:
+
+```typescript
+import { validateRequest, sizeLimiter, sanitizeRequest } from "restsecurity";
+```
 
 ---
 
@@ -26,7 +42,7 @@ npm install restsecurity
 
 Typical flow: limit body size → sanitize input → validate shape → run your handler.
 
-```javascript
+```typescript
 import express from "express";
 import { validateRequest, sizeLimiter, sanitizeRequest } from "restsecurity";
 
@@ -58,7 +74,7 @@ You can use `validateRequest` and `sanitizeRequest` only on the routes that need
 
 **validateRequest** ensures `body`, `query`, and/or `params` match a JSON Schema. If something doesn’t match, it responds with `400` and a list of errors; otherwise it calls `next()`.
 
-```javascript
+```typescript
 import { validateRequest } from "restsecurity";
 
 const bodySchema = {
@@ -107,7 +123,7 @@ Sanitization cleans strings so they’re safer to use in HTML, SQL, file paths, 
 
 So by default you get basic XSS and script-injection mitigation. You can then turn on extra defenses when you know input might be used in SQL, file paths, headers, or shell.
 
-```javascript
+```typescript
 import { sanitizeRequest } from "restsecurity";
 
 // Default: trim, remove dangerous patterns, escape HTML
@@ -143,7 +159,7 @@ Use `escapeSql` and `escapeShell` as **extra** layers; the main defenses are sti
 
 When you’re building a SQL string, a file path, or a shell command, you can sanitize that one value:
 
-```javascript
+```typescript
 import {
   escapeHtml,
   escapeSql,
@@ -195,7 +211,7 @@ So: **middleware** = “sanitize everything on the request”; **helpers** = “
 
 **sizeLimiter(limit)** returns Express middleware that parses JSON bodies and enforces a maximum size. Default is `"1mb"`. This helps avoid huge payloads tying up memory or causing DoS.
 
-```javascript
+```typescript
 import { sizeLimiter } from "restsecurity";
 
 app.use(sizeLimiter("1mb"));
