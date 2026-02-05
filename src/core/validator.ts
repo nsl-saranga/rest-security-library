@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import type { ValidateFunction } from "ajv";
 import { compileSchema } from "./schemaCompiler";
-import { formatErrors } from "./errors";
+import { formatErrors } from "../utils/errors";
 
 type Location = "body" | "query" | "params";
 

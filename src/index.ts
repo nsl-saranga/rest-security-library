@@ -1,5 +1,5 @@
-export { validateRequest } from "./validator";
-export { sizeLimiter } from "./sizeLimiter";
+export { validateRequest } from "./core/validator";
+export { sizeLimiter } from "./middleware/sizeLimiter";
 export {
   escapeHtml,
   escapeSql,
@@ -11,7 +11,7 @@ export {
   trim,
   sanitizeValue,
   sanitizeObject,
-  sanitizeRequest,
-  type SanitizationOptions
-} from "./sanitizer";
+  sanitizeRequest
+} from "./core/sanitizer";
+export type { SanitizationOptions, RequestSchemas, FormattedError } from "./types";
 
